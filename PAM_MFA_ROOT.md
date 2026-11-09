@@ -68,6 +68,21 @@ PARTE 3 Privilegios justos con sudo
 <img width="1852" height="461" alt="image" src="https://github.com/user-attachments/assets/2347bff1-618e-4cc1-bdfc-ee8545ccde95" />
 <img width="742" height="45" alt="image" src="https://github.com/user-attachments/assets/5079ad8a-da04-44d5-b868-c4baae75e096" />
 
+Preguntas de reflexión
+1. Una contraseña de 20 caracteres aleatorios es, en teoría, casi imposible de reventar por fuerza bruta. ¿Qué riesgo concreto cubre el MFA que una contraseña así, por fuerte que sea, no cubre?
 
+El MFA lo que cubre es el "algo que tienes", por el código en el movil de 30 segundos.
+
+2. Buscad brevemente la postura actual del NIST sobre la caducidad obligatoria de contraseñas. ¿Por qué forzar el cambio cada pocos días puede llegar a ser contraproducente para la seguridad real?
+
+Cambiar las contraseñas cada pocos dias, quiere decir que los usuarios cambian las contraseñas y como nunca se quedan con ninguna, las apuntan, afectando a su seguridad.
+
+3. Aunque sudo esté perfectamente configurado, seguís necesitando las ACL de la sesión anterior. Explicad con un ejemplo por qué una capa no sustituye a la otra.
+
+Si un usuario de ingenieria tiene permisos sudo para reiniciar el hmi_planta, pero no esta configurado el ACL, cualquier usuario sin sudo puedo entrar directo a la carpeta y borrarlos o copiarlos.
+
+4. Un alumno pierde el móvil con Google Authenticator y no guardó los scratch codes. ¿Qué tendría que hacer el administrador del sistema para devolverle el acceso sin comprometer la seguridad del resto de cuentas?
+
+Deberia el admin conectarse con root y eliminar o renombrar el archivo de  google_autheticator en la carpeta de el usuario que ha perdido el movil.
 
 
