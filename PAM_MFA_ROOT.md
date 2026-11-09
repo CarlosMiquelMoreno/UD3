@@ -57,6 +57,17 @@ Si pasa esto, cuando pones un codigo que no es, el sistema rechaza y deniega el 
 
 PARTE 3 Privilegios justos con sudo
 
-3.1 Por qué no usar la cuenta root a diario
+3.3 Práctica guiada
+<img width="706" height="88" alt="image" src="https://github.com/user-attachments/assets/b6ff074c-31c8-4630-9151-53ce100f9e6e" />
+<img width="876" height="72" alt="image" src="https://github.com/user-attachments/assets/943131a7-cd72-4e78-87bb-7bb72a73fad0" />
+
+
+3.4 Verificación
+<img width="875" height="637" alt="image" src="https://github.com/user-attachments/assets/9b155278-5af1-4fa8-bd8f-3a9962d3b9eb" />
+<img width="567" height="87" alt="image" src="https://github.com/user-attachments/assets/9332c11c-e742-4767-8c94-0033baf61ccd" />
+<img width="1852" height="461" alt="image" src="https://github.com/user-attachments/assets/2347bff1-618e-4cc1-bdfc-ee8545ccde95" />
+<img width="742" height="45" alt="image" src="https://github.com/user-attachments/assets/5079ad8a-da04-44d5-b868-c4baae75e096" />
+
+
 
 
