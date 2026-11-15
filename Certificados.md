@@ -38,4 +38,42 @@ Es por si alguien roba la clave privada del certificado del servidor.
 Paso 8 — Verificar la cadena de confianza
 <img width="877" height="180" alt="image" src="https://github.com/user-attachments/assets/08c838c0-f230-405c-b8f1-240d6a32e89f" />
 
+Paso 9 — Instalar el certificado en Apache
+<img width="890" height="355" alt="image" src="https://github.com/user-attachments/assets/f77041a5-29db-4fa6-8090-4b23b54d2113" />
+<img width="707" height="86" alt="image" src="https://github.com/user-attachments/assets/f52d6171-7e10-4b2d-b063-9563e91c092d" />
+<img width="881" height="243" alt="image" src="https://github.com/user-attachments/assets/3a06849f-b168-4bf9-98db-b7ace528812d" />
+
+Paso 10 — Probar HTTPS desde la propia VM, antes de confiar en la CA
+<img width="768" height="161" alt="image" src="https://github.com/user-attachments/assets/ba32488b-216c-453e-b878-0380476c4db0" />
+<img width="797" height="215" alt="image" src="https://github.com/user-attachments/assets/7dd7fdeb-0e45-438d-b3fb-962db943bd13" />
+El primero falla por que no conoce la CA de torrent S.L. cosa que en el segundo si
+
+Paso 11 — El navegador: advertencia, huella e importación de la CA
+<img width="873" height="95" alt="image" src="https://github.com/user-attachments/assets/6bf15b27-dee4-4c51-82fc-6716e212a984" />
+<img width="892" height="822" alt="image" src="https://github.com/user-attachments/assets/00bfc81f-8dab-44e4-8824-4c27408f74e0" />
+<img width="656" height="280" alt="image" src="https://github.com/user-attachments/assets/5189db4e-6855-43b3-a36b-543593086cb5" />
+
+Paso 12 — Mirar la conexión TLS por dentro
+<img width="872" height="247" alt="image" src="https://github.com/user-attachments/assets/5daa1740-887b-4e14-b132-2bf7c257e1da" />
+Si quitas la opcion CAfile, openssl rechaza porque busca al emisor en el almacen del SO
+
+Paso 13 — Guardar lo hecho para la Fase 2
+<img width="662" height="25" alt="image" src="https://github.com/user-attachments/assets/9d7be5af-3308-46a7-9c57-c4eb347e918c" />
+1. Explica con tus palabras la diferencia entre ca.key, ca.crt, srv.key y srv.crt: ¿cuáles son secretos y cuáles públicos?
+
+La ca.key y la srv.key son las claves privadas y nunca salen ni se comparten y los crt son los certificados publicos que se van enviando navegadores y clientes.
+
+2. Alguien roba ca.key (sin contraseña). ¿Qué puede hacer con ella? ¿Qué tendría que hacer Torrent S.L. para recuperar la confianza?
+
+El atacante puede firmar certificados falsos para suplantar paginas web de empleados, tendrian que borrar el certificado de raiz y de todos los dispositivos de la empresa y crear una nueva CA desde cero.
+
+3. ¿Por qué descargar ca.crt por HTTP y no verificar la huella es un riesgo? ¿Quién podría aprovecharlo?
+
+Al ir sin cifrar, un atacante que este en la red podria acceder y cambiar el archivo por su CA
+
+4. ¿Es una buena idea que la CA y el servidor web estén en la misma máquina? ¿Qué problema de seguridad crea?
+
+Es muy malo, si alguien hackea la web, tiene acceso a toda la empresa.
+
+
 
