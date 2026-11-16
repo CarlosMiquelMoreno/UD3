@@ -75,5 +75,80 @@ Al ir sin cifrar, un atacante que este en la red podria acceder y cambiar el arc
 
 Es muy malo, si alguien hackea la web, tiene acceso a toda la empresa.
 
+ PARTE 2 Un certificado real y gratuito con Let’s Encrypt
 
+ Paso 1 — Crear tu subdominio en DuckDNS
+ <img width="842" height="105" alt="image" src="https://github.com/user-attachments/assets/17ffdeb1-b320-4a51-b289-14fd77335dea" />
+ <img width="726" height="52" alt="image" src="https://github.com/user-attachments/assets/cd05a757-416a-4843-bbfb-952a93ebe24e" />
 
+ Paso 2 — Instalar acme.sh (leyendo antes lo que se va a ejecutar)
+<img width="806" height="177" alt="image" src="https://github.com/user-attachments/assets/768d7237-913d-42be-ac30-b190479a8a60" />
+Al revisar el script de instalación se ve que crea el directorio oculto ~/.acme.sh donde copia sus archivos y scripts DNS, añade un alias en ~/.bashrc para facilitar la ejecución y programa una tarea automática diaria en cron para renovar los certificados antes de que caduquen.
+
+Paso 3 — Elegir Let’s Encrypt como autoridad
+<img width="802" height="62" alt="image" src="https://github.com/user-attachments/assets/2ec78aef-d5a5-4566-9469-307964233625" />
+Si, sigue siendo el valido y necesario desde la version 3.0 de acme.sh, la herramienta que usa es ZeroSSL como autoridad, otras autoridares como google trust services, buypass Go SSL, SSL.com, etc.
+
+Paso 4 — Pedir el certificado (desafío DNS-01)
+<img width="880" height="557" alt="image" src="https://github.com/user-attachments/assets/36871090-cbe5-46f5-873f-f812b29f8af2" />
+<img width="881" height="528" alt="image" src="https://github.com/user-attachments/assets/c224e7d5-8180-4fa7-95e1-859d70eb96c8" />
+
+Paso 5 — Instalar el certificado donde Apache pueda usarlo
+<img width="872" height="307" alt="image" src="https://github.com/user-attachments/assets/f67d29fc-0a29-4036-b881-fdbefed64b3d" />
+
+Paso 6 — Cambiar Apache al certificado de Let’s Encrypt
+<img width="887" height="128" alt="image" src="https://github.com/user-attachments/assets/64046e21-1eb7-48bc-a9c5-3bf77dc9cc47" />
+<img width="871" height="128" alt="image" src="https://github.com/user-attachments/assets/4b3453fc-5e9f-446e-91d9-68254178f99b" />
+
+Paso 7 — Comprobar el resultado
+<img width="818" height="308" alt="image" src="https://github.com/user-attachments/assets/bd175162-dcd7-46fd-8d46-f4ce7e4633d5" />
+
+Paso 8 — Mirar la cadena y la lista de CA de confianza
+<img width="877" height="325" alt="image" src="https://github.com/user-attachments/assets/f75672b7-94e9-472c-b272-4656cd764e1a" />
+No, no esta, solo lo he importado dentro del almacen del navegador, pero no lo he instalado.
+
+Lo decide los proveedores de SO y navegadores, a traves de los programas de certificados raiz.
+
+Paso 9 — La renovación automática
+<img width="882" height="153" alt="image" src="https://github.com/user-attachments/assets/0f32bf04-c6d9-47bd-9ace-a3fe39fff29e" />
+
+Completa la tabla con lo que has visto en la práctica (no con lo que crees saber):
+
+|   | CA propia de Torrent S.L. | Let’s Encrypt |
+| - | ------------------------- | ------------- |
+| ¿Quien firma el certificado | Nuestra propia CA creada de raiz por nosotros. | Una autoridad publica (Let´s Encrypt). |
+| ¿El navegador lo acepta sin hacer nada? | No, da una advertencia de seguridad. | Si, esta el icono de candado cerrado desde el principio. | 
+| ¿Que tuviste que hacer para que confiara? | Descargar el certificado de torrent-ca.crt, comprobar la huella sha256 y impartarlo a los ajustes de firefox | Nada, ya viene asi de base. |
+| Validez del certificado del servidor | Se le pone en la propia configuracion, en nuestro caso 1 año. | 90, basado en las politicas de Let´s Encrypt. |
+| Coste y esfuerzo de renovarlo | Es gratis, pero hay que hacerlo por ti mismo. | Es gratis y automatico. |
+| ¿Que se comprueba antes de firmar? | Nada, nosotros mismo las firmamos. | La propiedad de verdad del dominio, mediante DNS. |
+| Valdria para un servidor sin internet? | Si porque funciona en red local. | No, necesitas accesso a internet. |
+
+3. Preguntas finales
+1. ¿Por qué el navegador confía en Let’s Encrypt y no en la CA de Torrent S.L.? ¿Quién decide en qué entidades confía un navegador?
+
+El certificado de Let´s Encrypt viene ya instalado de base en el alamacen de confianza del navegador y del SO. Lo que pasa en el CA de Torrent S.L. es algo creado por nosotros, por lo que ningun navegador externo lo conoce.
+
+Lo deciden los fabricantes de los navegadores(google, firefox, mozilla) a traves de programas de certificados raiz.
+
+2. ¿Por qué los certificados de Let’s Encrypt duran solo 90 días? Piensa en qué pasa si alguien roba la clave privada del servidor.
+
+Dura 90 dias por su politica de reducir el tiempo en el que si un atacante consigue de alguna manera obtener la clave privada, tenga un tiempo no tan duradero
+
+3. La página interna de la planta de Torrent S.L. no tiene salida a Internet. ¿Qué CA usarías, la propia o Let’s Encrypt? ¿Y para la web pública de un cliente?
+
+Para la interna la CA, al no estar conectada a internet el servidor no puede comunicarse con el Let´s Encrypt, donde si la usaria seria en la web publica, a gente externa no le podemos pedir que instalen siempre certificados.
+
+4. HTTPS protege la confidencialidad y la integridad de lo que viaja. Pon dos ejemplos de ataques que HTTPS no impide.
+
+El phising, osea, mostrara candado cerrado y trafico viajara cifrado pero sera una estafa.
+
+Ataques de aplicacion web, como fuerza bruta o malware, HTTPS hace que nadie pueda entrar ni interferir en la comunicacion, pero pueden por medio de fallos de programacion,
+
+5. Una empresa de 3 personas, ¿montaría una CA propia? ¿Cuándo sí tiene sentido? Relaciónalo con lo que haremos en la Fase 2 (VPN).
+
+ No saldria comveniente, seria gasto de tiempo y mantenimiento innecesarios, es mejor el Let´s Encrypt.
+
+ Tiene sentido en organizaciones mas grandes, ya que hay mas dispositivos.
+
+ En una VPN, necesitamos autenticar al servidor y al cliente/empleado que este fuera. En este caso una CA propia es muy buena opcion para emitir y revocar los certificados de cada trabajador que pueda meterse por la VPN.
